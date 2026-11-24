@@ -1,0 +1,67 @@
+{% extends '@CyfroweSyliusNpsPlugin/shop/survey/_page.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+
+    <link rel="stylesheet" href="{{ asset('bundles/cyfrowesyliusnpsplugin/css/survey.css') }}">
+{% endblock %}
+
+{% block content %}
+    <div class="ui text container" style="padding: 3em 0;">
+        <h1 class="ui header">{{ 'cyfrowe_nps.shop.survey.title'|trans }}</h1>
+
+        {% if survey.score is not null %}
+            <div class="ui success message">{{ 'cyfrowe_nps.shop.survey.saved'|trans }}</div>
+        {% endif %}
+
+        {{ form_start(form, {'attr': {'class': 'ui form nps-survey'}}) }}
+            {{ form_errors(form) }}
+
+            <div class="field">
+                <h2 id="nps-survey-question" class="ui medium header nps-survey__question">
+                    {{ contents.mainQuestion|default(null) ?: 'cyfrowe_nps.shop.survey.main_question'|trans }}
+                </h2>
+
+                <div class="nps-survey__scores" role="radiogroup" aria-labelledby="nps-survey-question">
+                    {% for choice in form.score %}
+                        <input
+                            type="radio"
+                            id="{{ choice.vars.id }}"
+                            name="{{ choice.vars.full_name }}"
+                            value="{{ choice.vars.value }}"
+                            class="nps-survey__score-input"
+                            {% if choice.vars.checked %}checked{% endif %}
+                            {% if form.score.vars.required %}required{% endif %}
+                        >
+                        <label for="{{ choice.vars.id }}" class="nps-survey__score">{{ choice.vars.label }}</label>
+                        {% do choice.setRendered %}
+                    {% endfor %}
+                </div>
+                {{ form_errors(form.score) }}
+                {% do form.score.setRendered %}
+            </div>
+
+            <div class="ui hidden divider"></div>
+
+            {% set low = contents.questionLow|default(null) ?: 'cyfrowe_nps.shop.survey.question_low'|trans %}
+            {% set high = contents.questionHigh|default(null) ?: 'cyfrowe_nps.shop.survey.question_high'|trans %}
+
+            {# survey.js swaps the wording when the score changes, so the label carries both. #}
+            {% set comment_label %}
+                <span data-question-low="{{ low }}" data-question-high="{{ high }}" data-promoter-from="{{ promoter_from }}">{{ survey.score is not null and survey.score >= promoter_from ? high : low }}</span>
+            {% endset %}
+
+            {{ form_row(form.comment, {'label': comment_label, 'label_html': true, 'translation_domain': false, 'help': 'cyfrowe_nps.shop.survey.comment_help'|trans, 'label_attr': {'class': 'nps-survey__follow-up'}, 'attr': {'rows': 5}}) }}
+
+            <div class="ui hidden divider"></div>
+
+            <button type="submit" class="ui large primary button">{{ 'cyfrowe_nps.shop.survey.submit'|trans }}</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/cyfrowesyliusnpsplugin/js/survey.js') }}" defer></script>
+{% endblock %}

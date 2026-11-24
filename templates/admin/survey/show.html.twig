@@ -1,0 +1,129 @@
+{% extends '@SyliusAdmin/layout.html.twig' %}
+
+{% set colours = { 'promoter': 'green', 'passive': 'grey', 'detractor': 'red' } %}
+{% set category = survey.score is not null ? nps_score_category(survey.score) : null %}
+
+{% block title %}{{ 'cyfrowe_nps.ui.response'|trans }} {{ parent() }}{% endblock %}
+
+{% block content %}
+    <div class="ui stackable grid">
+        <div class="sixteen wide column">
+            <h1 class="ui header">
+                <i class="comments icon"></i>
+                <div class="content">
+                    {{ 'cyfrowe_nps.ui.response'|trans }}
+                    <div class="sub header">{{ survey.orderNumber }}</div>
+                </div>
+            </h1>
+
+            <a href="{{ path('cyfrowe_nps_admin_survey_index') }}" class="ui labeled icon button">
+                <i class="left arrow icon"></i>
+                {{ 'cyfrowe_nps.ui.back_to_list'|trans }}
+            </a>
+        </div>
+
+        <div class="ten wide column">
+            <div class="ui segment">
+                {% if category is not null %}
+                    <div class="ui {{ colours[category] }} statistic">
+                        <div class="value">{{ survey.score }}</div>
+                        <div class="label">{{ ('cyfrowe_nps.ui.categories.' ~ category)|trans }}</div>
+                    </div>
+                {% endif %}
+
+                <table class="ui very basic compact table">
+                    <tbody>
+                        <tr>
+                            <td>{{ 'cyfrowe_nps.ui.customer_email'|trans }}</td>
+                            <td>{{ survey.customer ? survey.customer.email : '-' }}</td>
+                        </tr>
+                        {% if survey.customer and survey.customer.fullName is not empty %}
+                            <tr>
+                                <td>{{ 'cyfrowe_nps.ui.customer_name'|trans }}</td>
+                                <td>{{ survey.customer.fullName }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td>{{ 'cyfrowe_nps.ui.order_number'|trans }}</td>
+                            <td>
+                                {% if survey.order %}
+                                    <a href="{{ path('sylius_admin_order_show', { 'id': survey.order.id }) }}">{{ survey.orderNumber }}</a>
+                                {% else %}
+                                    {{ survey.orderNumber ?? '-' }}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% if survey.orderTotal is not null %}
+                            <tr>
+                                <td>{{ 'cyfrowe_nps.ui.order_total'|trans }}</td>
+                                <td>{{ survey.orderTotal|sylius_format_money(survey.currencyCode, app.user.localeCode) }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td>{{ 'cyfrowe_nps.ui.shipping_method'|trans }}</td>
+                            <td>{{ survey.shippingMethodName ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'cyfrowe_nps.ui.channel'|trans }}</td>
+                            <td>{{ survey.channelCode ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'cyfrowe_nps.ui.survey_status'|trans }}</td>
+                            <td>{{ include('@CyfroweSyliusNpsPlugin/admin/survey/grid/field/status.html.twig', { 'data': survey.status }) }}</td>
+                        </tr>
+                        {% if survey.skipReason is not null %}
+                            <tr>
+                                <td>{{ 'cyfrowe_nps.ui.skip_reason'|trans }}</td>
+                                <td>{{ survey.skipReason|trans }}</td>
+                            </tr>
+                        {% endif %}
+                        <tr>
+                            <td>{{ 'cyfrowe_nps.ui.sent_at'|trans }}</td>
+                            <td>{{ survey.sentAt ? survey.sentAt|date('d.m.Y H:i') : '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'cyfrowe_nps.ui.scored_at'|trans }}</td>
+                            <td>{{ survey.scoreSetAt ? survey.scoreSetAt|date('d.m.Y H:i') : '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ 'cyfrowe_nps.ui.completed_at'|trans }}</td>
+                            <td>{{ survey.completedAt ? survey.completedAt|date('d.m.Y H:i') : '-' }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="ui segment">
+                <h4 class="ui header">{{ 'cyfrowe_nps.ui.question'|trans }}</h4>
+                <p>{{ contents.mainQuestion|default(null) ?: 'cyfrowe_nps.email.survey.main_question'|trans([], null, survey.localeCode) }}</p>
+
+                <h4 class="ui header">{{ 'cyfrowe_nps.ui.answer'|trans }}</h4>
+                {% if survey.comment is not empty %}
+                    <p>{{ survey.comment|nl2br }}</p>
+                {% else %}
+                    <p class="ui grey text">{{ 'cyfrowe_nps.ui.no_comment'|trans }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        {% block handling %}
+        <div class="six wide column">
+            <div class="ui segment">
+                <h4 class="ui header">{{ 'cyfrowe_nps.ui.handling'|trans }}</h4>
+
+                {{ form_start(form, { 'action': path('cyfrowe_nps_admin_survey_handling', { 'id': survey.id }), 'attr': { 'class': 'ui loadable form' } }) }}
+                    {{ form_row(form.handlingStatus) }}
+                    {{ form_row(form.internalNote) }}
+
+                    <div class="ui field">
+                        <label>{{ 'cyfrowe_nps.ui.handled_by'|trans }}</label>
+                        <span>{{ survey.handledBy ?? '-' }}</span>
+                    </div>
+
+                    <button type="submit" class="ui primary button">{{ 'cyfrowe_nps.ui.save'|trans }}</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        {% endblock %}
+    </div>
+{% endblock %}

@@ -1,0 +1,7 @@
+default:
+    suites:
+        nps_shop:
+            contexts:
+                - Tests\Cyfrowe\SyliusNpsPlugin\Behat\Context\Ui\Shop\SurveyContext
+            filters:
+                tags: "@nps"

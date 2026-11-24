@@ -1,0 +1,5 @@
+services:
+    # The shipped storage keeps limiter counters in cache.app, which survives between test runs and
+    # would let one run exhaust the address limit for the next. In tests each kernel gets its own.
+    cyfrowe_nps.rate_limiter.storage:
+        class: Symfony\Component\RateLimiter\Storage\InMemoryStorage

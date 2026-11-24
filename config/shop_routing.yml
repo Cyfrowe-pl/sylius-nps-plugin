@@ -1,0 +1,16 @@
+cyfrowe_nps_shop_survey_score:
+    path: /nps/{token}/{score}
+    methods: [GET]
+    defaults:
+        _controller: cyfrowe_nps.controller.shop.score
+    requirements:
+        token: '[A-Za-z0-9_-]+'
+        score: '\d+'
+
+cyfrowe_nps_shop_survey:
+    path: /nps/{token}
+    methods: [GET, POST]
+    defaults:
+        _controller: cyfrowe_nps.controller.shop.survey
+    requirements:
+        token: '[A-Za-z0-9_-]+'

@@ -1,0 +1,50 @@
+sylius_grid:
+    grids:
+        cyfrowe_nps_admin_configuration:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%cyfrowe_nps.model.channel_configuration.class%"
+            sorting:
+                channelCode: asc
+            limits: [10, 25, 50]
+            fields:
+                channelCode:
+                    type: string
+                    label: cyfrowe_nps.ui.channel
+                    sortable: ~
+                enabled:
+                    type: twig
+                    label: cyfrowe_nps.ui.enabled
+                    path: enabled
+                    sortable: ~
+                    options:
+                        template: "@SyliusUi/Grid/Field/enabled.html.twig"
+                delayDays:
+                    type: string
+                    label: cyfrowe_nps.ui.delay_days
+                cooldownDays:
+                    type: string
+                    label: cyfrowe_nps.ui.cooldown_days
+                notifyEnabled:
+                    type: twig
+                    label: cyfrowe_nps.ui.notifications
+                    path: notifyEnabled
+                    options:
+                        template: "@SyliusUi/Grid/Field/enabled.html.twig"
+            filters:
+                channelCode:
+                    type: string
+                    label: cyfrowe_nps.ui.channel
+                enabled:
+                    type: boolean
+                    label: cyfrowe_nps.ui.enabled
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    update:
+                        type: update
+                    delete:
+                        type: delete

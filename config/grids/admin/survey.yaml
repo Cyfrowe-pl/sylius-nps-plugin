@@ -1,0 +1,146 @@
+sylius_grid:
+    grids:
+        cyfrowe_nps_admin_survey:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%cyfrowe_nps.model.survey.class%"
+                    repository:
+                        method: createAdminListQueryBuilder
+                    pagination:
+                        # The customer is joined to-one, so a row per record comes back and the
+                        # paginator needs no separate pass over the identifiers to count them.
+                        fetch_join_collection: false
+            sorting:
+                scoreSetAt: desc
+            limits: [25, 50, 100]
+            fields:
+                scoreSetAt:
+                    type: datetime
+                    label: cyfrowe_nps.ui.scored_at
+                    sortable: ~
+                    options:
+                        format: d.m.Y H:i
+                score:
+                    type: string
+                    label: cyfrowe_nps.ui.score
+                    sortable: ~
+                category:
+                    type: twig
+                    label: cyfrowe_nps.ui.category
+                    path: score
+                    # Ordering by band is ordering by score - the bands are ranges of it.
+                    sortable: score
+                    options:
+                        template: "@CyfroweSyliusNpsPlugin/admin/survey/grid/field/category.html.twig"
+                customerEmail:
+                    type: string
+                    label: cyfrowe_nps.ui.customer_email
+                    path: customer.email
+                    sortable: customer.email
+                orderNumber:
+                    type: string
+                    label: cyfrowe_nps.ui.order_number
+                    sortable: ~
+                shippingMethodName:
+                    type: string
+                    label: cyfrowe_nps.ui.shipping_method
+                    sortable: ~
+                status:
+                    type: twig
+                    label: cyfrowe_nps.ui.survey_status
+                    path: status
+                    sortable: ~
+                    options:
+                        template: "@CyfroweSyliusNpsPlugin/admin/survey/grid/field/status.html.twig"
+                handlingStatus:
+                    type: twig
+                    label: cyfrowe_nps.ui.handling_status
+                    path: handlingStatus
+                    sortable: ~
+                    options:
+                        template: "@CyfroweSyliusNpsPlugin/admin/survey/grid/field/handling_status.html.twig"
+                comment:
+                    type: twig
+                    label: cyfrowe_nps.ui.comment
+                    path: comment
+                    sortable: ~
+                    options:
+                        template: "@CyfroweSyliusNpsPlugin/admin/survey/grid/field/comment.html.twig"
+            filters:
+                # keeps_rates: the filter chooses which surveys went out rather than how they were
+                # answered, so the response rates above the list stay meaningful while it is in use.
+                search:
+                    type: string
+                    label: cyfrowe_nps.ui.search
+                    options:
+                        fields: [customer.email, orderNumber]
+                        keeps_rates: true
+                scoreSetAt:
+                    type: date
+                    label: cyfrowe_nps.ui.scored_at
+                sentAt:
+                    type: date
+                    label: cyfrowe_nps.ui.sent_date
+                    options:
+                        keeps_rates: true
+                score:
+                    type: cyfrowe_nps_score_range
+                    label: cyfrowe_nps.ui.score
+                category:
+                    type: cyfrowe_nps_score_category
+                    label: cyfrowe_nps.ui.category
+                    options:
+                        field: score
+                channelCode:
+                    type: cyfrowe_nps_distinct_value
+                    label: cyfrowe_nps.ui.channel
+                    options:
+                        keeps_rates: true
+                    form_options:
+                        distinct_field: channelCode
+                shippingMethodName:
+                    type: cyfrowe_nps_distinct_value
+                    label: cyfrowe_nps.ui.shipping_method
+                    options:
+                        keeps_rates: true
+                    form_options:
+                        distinct_field: shippingMethodName
+                status:
+                    type: cyfrowe_nps_enum
+                    label: cyfrowe_nps.ui.survey_status
+                    form_options:
+                        class: Cyfrowe\SyliusNpsPlugin\Entity\SurveyStatus
+                        multiple: true
+                        attr:
+                            class: ui fluid search selection dropdown
+                handlingStatus:
+                    type: cyfrowe_nps_enum
+                    label: cyfrowe_nps.ui.handling_status
+                    form_options:
+                        class: Cyfrowe\SyliusNpsPlugin\Entity\HandlingStatus
+                        multiple: true
+                        attr:
+                            class: ui fluid search selection dropdown
+                comment:
+                    type: cyfrowe_nps_presence
+                    label: cyfrowe_nps.ui.comment
+                    options:
+                        field: comment
+                answered:
+                    type: cyfrowe_nps_presence
+                    label: cyfrowe_nps.ui.scored
+                    options:
+                        field: score
+            actions:
+                main:
+                    export_csv:
+                        type: cyfrowe_nps_export
+                        label: cyfrowe_nps.ui.export_csv
+                        icon: download
+                        options:
+                            link:
+                                route: cyfrowe_nps_admin_survey_export_csv
+                item:
+                    show:
+                        type: show

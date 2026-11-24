@@ -1,0 +1,15 @@
+{% extends '@CyfroweSyliusNpsPlugin/shop/survey/_page.html.twig' %}
+
+{% block content %}
+    <div class="ui text container" style="padding: 3em 0;">
+        <h1 class="ui header">{{ 'cyfrowe_nps.shop.survey.completed.header'|trans }}</h1>
+
+        <div class="ui success message">
+            {{ (contents.thankYouText|default(null) ?: 'cyfrowe_nps.shop.survey.completed.thank_you'|trans)|nl2br }}
+        </div>
+
+        {% if survey.score is not null %}
+            <p>{{ 'cyfrowe_nps.shop.survey.completed.your_score'|trans({'%score%': survey.score}) }}</p>
+        {% endif %}
+    </div>
+{% endblock %}

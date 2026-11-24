@@ -1,0 +1,19 @@
+sylius_resource:
+    resources:
+        cyfrowe_nps.survey:
+            driver: doctrine/orm
+            classes:
+                model: Cyfrowe\SyliusNpsPlugin\Entity\Survey
+                interface: Cyfrowe\SyliusNpsPlugin\Entity\SurveyInterface
+                repository: Cyfrowe\SyliusNpsPlugin\Repository\SurveyRepository
+        cyfrowe_nps.channel_configuration:
+            driver: doctrine/orm
+            classes:
+                model: Cyfrowe\SyliusNpsPlugin\Entity\Configuration
+                interface: Cyfrowe\SyliusNpsPlugin\Entity\ConfigurationInterface
+                form: Cyfrowe\SyliusNpsPlugin\Form\Type\ConfigurationType
+            translation:
+                classes:
+                    model: Cyfrowe\SyliusNpsPlugin\Entity\ConfigurationTranslation
+                    interface: Cyfrowe\SyliusNpsPlugin\Entity\ConfigurationTranslationInterface
+                    form: Cyfrowe\SyliusNpsPlugin\Form\Type\ConfigurationTranslationType

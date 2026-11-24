@@ -1,0 +1,9 @@
+cyfrowe_nps:
+    flash:
+        test_email:
+            sent: 'The test email has been sent.'
+            bad_address: 'Enter a valid address to send the test to.'
+            failed: 'The test email could not be built.'
+        handling:
+            saved: 'The status and note have been saved.'
+            failed: 'The status and note could not be saved.'

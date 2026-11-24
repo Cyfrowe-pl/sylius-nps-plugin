@@ -1,0 +1,26 @@
+cyfrowe_nps:
+    survey:
+        comment:
+            too_long: 'Please keep the comment under {{ limit }} characters.'
+    configuration:
+        channel:
+            not_blank: Please choose a channel.
+            unique: This channel already has an NPS configuration.
+        delay_days:
+            range: The sending delay must be between {{ min }} and {{ max }} days.
+        cooldown_days:
+            range: The cooldown must be between {{ min }} and {{ max }} days.
+        link_validity_days:
+            range: Link validity must be between {{ min }} and {{ max }} days.
+        send_hour_from:
+            range: The start of the sending window must be between {{ min }} and {{ max }}.
+        send_hour_to:
+            range: The end of the sending window must be between {{ min }} and {{ max }}.
+            after_from: The end of the sending window must come after its start.
+        notify_threshold:
+            range: The critical score threshold must be between {{ min }} and {{ max }}.
+        notify_window_minutes:
+            range: The grace window must be between {{ min }} and {{ max }} minutes.
+        notify_email:
+            invalid: This is not a valid email address.
+            required_when_enabled: An alert address is required when alerts are enabled.

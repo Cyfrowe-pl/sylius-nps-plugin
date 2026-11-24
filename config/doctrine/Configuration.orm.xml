@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <!--
+        The `translations` association is deliberately left unmapped: Sylius' ORMTranslatableListener
+        maps it with indexBy="locale" and EXTRA_LAZY fetching, but only for entities that do not
+        declare it themselves. Declaring it here would silence the listener and leave the collection
+        keyed by offset, so getTranslation('pl_PL') would never find an existing translation.
+    -->
+    <mapped-superclass name="Cyfrowe\SyliusNpsPlugin\Entity\Configuration" table="cyfrowe_nps_configuration">
+        <unique-constraints>
+            <unique-constraint name="uniq_nps_configuration_channel" columns="channel_code"/>
+        </unique-constraints>
+
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="channelCode" column="channel_code" type="string" length="255" nullable="true"/>
+        <field name="enabled" column="enabled" type="boolean"/>
+
+        <field name="delayDays" column="delay_days" type="smallint"/>
+        <field name="cooldownDays" column="cooldown_days" type="smallint"/>
+        <field name="linkValidityDays" column="link_validity_days" type="smallint"/>
+        <field name="sendHourFrom" column="send_hour_from" type="smallint"/>
+        <field name="sendHourTo" column="send_hour_to" type="smallint"/>
+
+
+        <field name="notifyEnabled" column="notify_enabled" type="boolean"/>
+        <field name="notifyEmail" column="notify_email" type="string" length="255" nullable="true"/>
+        <field name="notifyThreshold" column="notify_threshold" type="smallint"/>
+        <field name="notifyWindowMinutes" column="notify_window_minutes" type="smallint"/>
+    </mapped-superclass>
+</doctrine-mapping>

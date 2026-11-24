@@ -1,0 +1,26 @@
+cyfrowe_nps:
+    survey:
+        comment:
+            too_long: 'Komentarz nie może przekraczać {{ limit }} znaków.'
+    configuration:
+        channel:
+            not_blank: Wybierz kanał.
+            unique: Ten kanał ma już konfigurację NPS.
+        delay_days:
+            range: Opóźnienie wysyłki musi mieścić się między {{ min }} a {{ max }} dni.
+        cooldown_days:
+            range: Cooldown musi mieścić się między {{ min }} a {{ max }} dni.
+        link_validity_days:
+            range: Ważność linku musi mieścić się między {{ min }} a {{ max }} dni.
+        send_hour_from:
+            range: Początek okna wysyłki musi mieścić się między {{ min }} a {{ max }}.
+        send_hour_to:
+            range: Koniec okna wysyłki musi mieścić się między {{ min }} a {{ max }}.
+            after_from: Koniec okna wysyłki musi być późniejszy niż jego początek.
+        notify_threshold:
+            range: Próg oceny krytycznej musi mieścić się między {{ min }} a {{ max }}.
+        notify_window_minutes:
+            range: Okno karencji musi mieścić się między {{ min }} a {{ max }} minut.
+        notify_email:
+            invalid: To nie jest poprawny adres e-mail.
+            required_when_enabled: Adres powiadomień jest wymagany, gdy powiadomienia są włączone.

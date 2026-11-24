@@ -1,0 +1,38 @@
+services:
+    app:
+        build:
+            context: .
+            args:
+                PHP_VERSION: ${PHP_VERSION:-8.2}
+                UID: ${UID:-1000}
+                GID: ${GID:-1000}
+        environment:
+            APP_ENV: "dev"
+            DATABASE_URL: "mysql://root:mysql@mysql/sylius_nps_%kernel.environment%?charset=utf8mb4&serverVersion=8.0.43"
+        volumes:
+            - ./:/app:delegated
+        ports:
+            - "${HTTP_PORT:-8080}:80"
+        depends_on:
+            mysql:
+                condition: service_healthy
+        networks:
+            - sylius
+
+    mysql:
+        image: mysql:8.0
+        environment:
+            MYSQL_ROOT_PASSWORD: mysql
+        ports:
+            - "${MYSQL_PORT:-3307}:3306"
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-pmysql"]
+            interval: 5s
+            timeout: 5s
+            retries: 30
+        networks:
+            - sylius
+
+networks:
+    sylius:
+        driver: bridge

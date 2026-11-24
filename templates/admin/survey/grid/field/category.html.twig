@@ -1,0 +1,6 @@
+{% if data is not null %}
+    {% set category = nps_score_category(data) %}
+    <span class="ui label {{ {'promoter': 'green', 'passive': 'grey', 'detractor': 'red'}[category] }}">
+        {{ ('cyfrowe_nps.ui.categories.' ~ category)|trans }}
+    </span>
+{% endif %}

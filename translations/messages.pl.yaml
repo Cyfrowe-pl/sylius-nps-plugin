@@ -1,0 +1,161 @@
+cyfrowe_nps:
+    ui:
+        nps: NPS
+        channel_configurations: Ustawienia NPS
+        new_channel_configuration: Nowa konfiguracja kanału
+        edit_channel_configuration: Edycja konfiguracji kanału
+        surveys: 'Odpowiedzi NPS'
+        responses: 'Odpowiedzi'
+        responses_subheader: 'Oceny i komentarze od klientów'
+        scored_at: 'Data oceny'
+        score: 'Ocena'
+        category: 'Kategoria'
+        customer_email: 'Klient'
+        order_number: 'Zamówienie'
+        shipping_method: 'Sposób dostawy'
+        handling_status: 'Status obsługi'
+        survey_status: 'Status ankiety'
+        sent_date: 'Data wysyłki'
+        skip_reason: 'Powód pominięcia'
+        comment: 'Komentarz'
+        search: 'E-mail lub numer zamówienia'
+        scored: 'Ocena wystawiona'
+        summary:
+            index: 'Wskaźnik NPS'
+            no_answers: 'Brak odpowiedzi'
+            answers: 'Odpowiedzi'
+            average_score: 'Średnia ocena'
+            with_comment: 'Z komentarzem'
+            sent: 'Wysłane'
+            clicked: 'Ocenione'
+            completed: 'Wypełnione'
+            response_rate: 'Zwrot'
+            completion_rate: 'Wypełnienia'
+            rates_withheld: 'Zwrot nie jest liczony, bo wybrane filtry pomijają część wysłanych ankiet (np. filtr oceny albo statusu). Zawęź listę datą wysyłki, kanałem albo sposobem dostawy.'
+            rates_still_open: 'Ankiety z wciąż ważnym linkiem mogą jeszcze otrzymać odpowiedź.'
+            distribution: 'Rozkład ocen'
+        categories:
+            promoter: 'Promotor'
+            passive: 'Neutralny'
+            detractor: 'Krytyk'
+        survey_statuses:
+            pending: 'Oczekuje'
+            queued: 'W kolejce'
+            sent: 'Wysłana'
+            scored: 'Oceniona'
+            completed: 'Wypełniona'
+            skipped: 'Pominięta'
+        skip_reasons:
+            no_recipient: 'Brak adresu e-mail'
+            cooldown: 'Ankieta wysłana niedawno do tego klienta'
+            channel_disabled: 'Ankieta wyłączona w kanale'
+            channel_missing: 'Kanał nie istnieje'
+            order_cancelled: 'Zamówienie anulowane'
+            order_missing: 'Zamówienie nie istnieje'
+        handling_statuses:
+            new: 'Nowa'
+            in_progress: 'W toku'
+            done: 'Obsłużona'
+        response: 'Odpowiedź'
+        back_to_list: 'Powrót do listy'
+        customer_name: 'Imię i nazwisko'
+        order_total: 'Wartość zamówienia'
+        currency: 'Waluta'
+        export_csv: 'Eksport CSV'
+        sent_at: 'Ankieta wysłana'
+        completed_at: 'Wypełniona'
+        question: 'Zadane pytanie'
+        answer: 'Odpowiedź klienta'
+        no_comment: 'Klient nie zostawił komentarza.'
+        handling: 'Obsługa'
+        handled_by: 'Obsługiwał'
+        internal_note: 'Notatka wewnętrzna'
+        save: 'Zapisz'
+        settings: Ustawienia
+        settings_subheader: Ustawienia ankiety dla kanału sprzedaży
+        channel: Kanał
+        enabled: Włączona
+        delay_days: Wyślij po (dniach)
+        cooldown_days: Cooldown (dni)
+        notifications: Powiadomienia
+    email:
+        survey:
+            subject: 'Podziel się z nami swoją opinią'
+            greeting: 'Cześć %name%,'
+            greeting_without_name: 'Cześć,'
+            main_question: 'Jak bardzo prawdopodobne jest, że polecisz nas znajomemu?'
+            scale_low: 'zupełnie nieprawdopodobne'
+            scale_high: 'bardzo prawdopodobne'
+            about_order: 'Ankieta dotyczy zamówienia %number%.'
+        critical:
+            subject: 'Ocena krytyczna NPS %score% — zamówienie %number%'
+            subject_correction: 'Ocena NPS skorygowana na %score% — zamówienie %number%'
+            subject_comment: 'Komentarz do oceny NPS %score% — zamówienie %number%'
+            lead: 'Klient ocenił swoje zamówienie %number% na %score%.'
+            lead_correction: 'Klient zmienił ocenę na %score%, więc zamówienie %number% nie wymaga już reakcji.'
+            lead_comment: 'Klient dodał komentarz do oceny %score% przy zamówieniu %number%.'
+            final: 'Ocena finalna — klient wysłał formularz.'
+            provisional: 'Ocena wstępna — klient nie zostawił komentarza i może ją jeszcze zmienić do %date%.'
+            comment: 'Komentarz'
+            no_comment: 'Klient nie zostawił komentarza.'
+            order: 'Zamówienie'
+            order_value: 'Wartość zamówienia'
+            shipping_method: 'Sposób dostawy'
+            open_card: 'Otwórz odpowiedź w panelu'
+            bot_suspected: 'Rekord został oznaczony jako prawdopodobnie automatyczny. Flaga jest wyłącznie diagnostyczna i nigdy nie decyduje o wysłaniu alertu.'
+    shop:
+        survey:
+            breadcrumb: Ankieta
+            title: Podziel się z nami swoją opinią
+            saved: Dziękujemy! Twoja ocena została zapisana.
+            main_question: Jak bardzo prawdopodobne jest, że polecisz nas znajomemu?
+            question_low: Co poszło nie tak?
+            question_high: Co podobało Ci się najbardziej?
+            score: Twoja ocena
+            comment: Chcesz coś dodać?
+            comment_help: Prosimy nie podawać danych osobowych.
+            submit: Wyślij opinię
+            unknown:
+                header: Nie rozpoznajemy tego linku
+                message: Sprawdź, czy otworzyłeś pełny link z wiadomości.
+            expired:
+                header: Ankieta wygasła
+                message: Ankieta była dostępna przez ograniczony czas i jest już zamknięta. Dziękujemy za zainteresowanie.
+            completed:
+                header: Twoja opinia została zapisana
+                thank_you: Dziękujemy za Twój czas
+                your_score: 'Twoja ocena: %score%'
+    form:
+        configuration:
+            channel: Kanał
+            channel_help: Jedna konfiguracja na kanał sprzedaży.
+            enabled: Ankieta włączona
+            delay_days: Wyślij po (dniach)
+            delay_days_help: Liczone od chwili zakwalifikowania zamówienia.
+            cooldown_days: Cooldown (dni)
+            cooldown_days_help: Ten sam klient nie dostanie ankiety częściej niż co tyle dni.
+            send_hour_from: Wysyłka od (godzina)
+            send_hour_from_help: Strefa czasowa sklepu, 0-23.
+            send_hour_to: Wysyłka do (godzina)
+            send_hour_to_help: Ostatni mail wychodzi przed tą godziną, 1-24.
+            link_validity_days: Ważność linku (dni)
+            link_validity_days_help: Po tym czasie link pokazuje komunikat o wygaśnięciu zamiast ankiety.
+            notify_enabled: Powiadamiaj o ocenach krytycznych
+            notify_email: Adres powiadomień
+            notify_threshold: Próg oceny krytycznej
+            notify_threshold_help: Oceny równe tej wartości lub niższe wyzwalają powiadomienie.
+            notify_window_minutes: Okno karencji (minuty)
+            notify_window_minutes_help: Ile czekamy na wypełnienie formularza, zanim wyślemy alert.
+            test_email: 'Wyślij test na adres'
+            test_email_help: 'Wysyła maila z ankietą z treściami aktualnie wpisanymi na ekranie, zapisanymi lub nie. Linki w nim nie zapisują oceny - otwierają stronę nierozpoznanego linku.'
+            send_test_email: 'Wyślij testowy mail'
+            contents: Treści
+            email_subject: Temat maila
+            main_question: Pytanie główne
+            main_question_help: Pytanie zadawane w mailu, nad skalą 0-10.
+            question_low: Pytanie dla ocen 0-8
+            question_low_help: Pokazywane w formularzu, gdy klient wystawił 8 lub mniej.
+            question_high: Pytanie dla ocen 9-10
+            question_high_help: Pokazywane w formularzu, gdy klient wystawił 9 lub 10.
+            thank_you_text: Tekst podziękowania
+            footer_note: Dopisek w stopce

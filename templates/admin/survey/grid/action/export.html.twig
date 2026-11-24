@@ -1,0 +1,9 @@
+{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+
+{# The filters live in the query string, and the file has to hold what the screen holds, so they
+   are carried over rather than rebuilt from the action's own configuration. Paging and sorting
+   come along with them and are both ignored on purpose: the file is the whole filtered set rather
+   than the page being read, and it answers for which records are in it, not for their order. #}
+{% set path = path(options.link.route, app.request.query.all|merge(options.link.parameters|default({}))) %}
+
+{{ buttons.default(path, action.label, null, action.icon) }}

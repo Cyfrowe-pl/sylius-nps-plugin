@@ -1,0 +1,4 @@
+{% set colours = {'pending': 'grey', 'queued': 'grey', 'sent': 'blue', 'scored': 'teal', 'completed': 'green', 'skipped': 'orange'} %}
+<span class="ui label {{ colours[data.value] ?? 'grey' }}">
+    {{ data|trans }}
+</span>

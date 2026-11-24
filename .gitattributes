@@ -1,0 +1,19 @@
+# Development files are kept out of the distributed package archive.
+/tests                  export-ignore
+/features               export-ignore
+/.github                export-ignore
+/.docker                export-ignore
+/docker-compose.yml     export-ignore
+/Dockerfile             export-ignore
+/.env.dist              export-ignore
+/Makefile               export-ignore
+/behat.yml.dist         export-ignore
+/phpunit.xml.dist       export-ignore
+/phpstan.neon           export-ignore
+/ecs.php                export-ignore
+/.editorconfig          export-ignore
+/.gitattributes         export-ignore
+/.gitignore             export-ignore
+/symfony.lock           export-ignore
+/bin                    export-ignore
+/node_modules           export-ignore

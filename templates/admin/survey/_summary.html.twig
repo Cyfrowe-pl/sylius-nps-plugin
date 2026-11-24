@@ -1,0 +1,106 @@
+{# Rendered into the grid page through Sylius' UI events, so the whole index context is in
+   scope - 'resources' is the grid view the list was built from. #}
+{% set summary = nps_survey_summary(resources) %}
+{% set colours = { 'promoter': 'green', 'passive': 'grey', 'detractor': 'red' } %}
+{% set busiest = max(summary.scoreDistribution) %}
+{# Bars are sized in pixels rather than per cent: a percentage height depends on the parent having
+   a definite one, which is a silent way for the whole chart to collapse to nothing. #}
+{% set track_height = 80 %}
+
+<style>
+    .nps-distribution { display: flex; gap: .25rem; }
+    .nps-distribution__score { flex: 1 1 0; text-align: center; }
+    .nps-distribution__track { display: flex; align-items: flex-end; height: {{ track_height }}px; }
+    .nps-distribution__bar { flex: 1; background: #2185d0; border-radius: 2px 2px 0 0; }
+</style>
+
+<div class="ui segment">
+    <div class="ui stackable three column grid">
+        <div class="column">
+            <div class="ui {{ summary.index is null ? 'grey' : (summary.index >= 0 ? 'green' : 'red') }} statistic">
+                <div class="value">{{ summary.index ?? '-' }}</div>
+                <div class="label">{{ 'cyfrowe_nps.ui.summary.index'|trans }}</div>
+            </div>
+
+            {% if summary.index is null %}
+                <p class="ui grey text">{{ 'cyfrowe_nps.ui.summary.no_answers'|trans }}</p>
+            {% endif %}
+        </div>
+
+        <div class="column">
+            <table class="ui very basic compact table">
+                <tbody>
+                    {% for category, colour in colours %}
+                        <tr>
+                            <td><span class="ui label {{ colour }}">{{ ('cyfrowe_nps.ui.categories.' ~ category)|trans }}</span></td>
+                            <td class="right aligned">{{ summary.countByCategory[category] }}</td>
+                            <td class="right aligned">{{ summary.shareByCategory[category] }}%</td>
+                        </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>{{ 'cyfrowe_nps.ui.summary.answers'|trans }}</td>
+                        <td class="right aligned"><strong>{{ summary.answers }}</strong></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'cyfrowe_nps.ui.summary.average_score'|trans }}</td>
+                        <td class="right aligned">{{ summary.averageScore ?? '-' }}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>{{ 'cyfrowe_nps.ui.summary.with_comment'|trans }}</td>
+                        <td class="right aligned">{{ summary.withComment }}</td>
+                        <td class="right aligned">{{ summary.commentShare }}%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="column">
+            <div class="ui tiny statistics">
+                <div class="statistic">
+                    <div class="value">{{ summary.sent }}</div>
+                    <div class="label">{{ 'cyfrowe_nps.ui.summary.sent'|trans }}</div>
+                </div>
+                <div class="statistic">
+                    <div class="value">{{ summary.clicked }}</div>
+                    <div class="label">{{ 'cyfrowe_nps.ui.summary.clicked'|trans }}</div>
+                </div>
+                <div class="statistic">
+                    <div class="value">{{ summary.completed }}</div>
+                    <div class="label">{{ 'cyfrowe_nps.ui.summary.completed'|trans }}</div>
+                </div>
+            </div>
+
+            <div class="ui tiny statistics nps-rates">
+                <div class="statistic">
+                    <div class="value">{{ summary.responseRate is null ? '-' : summary.responseRate ~ '%' }}</div>
+                    <div class="label">{{ 'cyfrowe_nps.ui.summary.response_rate'|trans }}</div>
+                </div>
+                <div class="statistic">
+                    <div class="value">{{ summary.completionRate is null ? '-' : summary.completionRate ~ '%' }}</div>
+                    <div class="label">{{ 'cyfrowe_nps.ui.summary.completion_rate'|trans }}</div>
+                </div>
+            </div>
+
+            {% if summary.ratesWithheld %}
+                <p class="ui grey text nps-rates-hint">{{ 'cyfrowe_nps.ui.summary.rates_withheld'|trans }}</p>
+            {% elseif summary.responseRate is not null %}
+                <p class="ui grey text">{{ 'cyfrowe_nps.ui.summary.rates_still_open'|trans }}</p>
+            {% endif %}
+
+            <h5 class="ui header">{{ 'cyfrowe_nps.ui.summary.distribution'|trans }}</h5>
+
+            <div class="nps-distribution">
+                {% for score, count in summary.scoreDistribution %}
+                    <div class="nps-distribution__score" title="{{ count }}">
+                        <div class="nps-distribution__track">
+                            <div class="nps-distribution__bar" style="height: {{ busiest > 0 ? (count / busiest * track_height)|round : 0 }}px"></div>
+                        </div>
+                        <small>{{ score }}</small>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

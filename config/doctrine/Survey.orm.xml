@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="Cyfrowe\SyliusNpsPlugin\Entity\Survey" table="cyfrowe_nps_survey">
+        <indexes>
+            <index name="idx_nps_survey_channel_scored" columns="channel_code,score_set_at"/>
+            <index name="idx_nps_survey_shipping_method" columns="shipping_method_code"/>
+            <index name="idx_nps_survey_shipping_name" columns="shipping_method_name"/>
+            <index name="idx_nps_survey_due_for_sending" columns="status,channel_code,qualified_at"/>
+            <index name="idx_nps_survey_customer_sent" columns="customer_id,sent_at"/>
+            <index name="idx_nps_survey_sent" columns="sent_at"/>
+            <index name="idx_nps_survey_handling" columns="handling_status"/>
+            <index name="idx_nps_survey_score_notified" columns="score,critical_notified_at"/>
+            <!--
+                For the follow-up alerts. Their working set is the records already alerted about,
+                which is a small fraction of a channel; the live link is a range on expires_at and
+                has to come after it, because nothing past a range narrows the scan.
+            -->
+            <index name="idx_nps_survey_channel_notified" columns="channel_code,critical_notified_at,expires_at"/>
+        </indexes>
+
+        <unique-constraints>
+            <unique-constraint name="uniq_nps_survey_token" columns="token"/>
+            <unique-constraint name="uniq_nps_survey_order" columns="order_id"/>
+        </unique-constraints>
+
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="token" column="token" type="string" length="64" nullable="true"/>
+        <field name="status" column="status" type="string" length="20" enum-type="Cyfrowe\SyliusNpsPlugin\Entity\SurveyStatus"/>
+        <field name="channelCode" column="channel_code" type="string" length="255" nullable="true"/>
+        <field name="localeCode" column="locale_code" type="string" length="16" nullable="true"/>
+
+        <field name="orderNumber" column="order_number" type="string" length="255" nullable="true"/>
+        <field name="orderTotal" column="order_total" type="integer" nullable="true"/>
+        <field name="currencyCode" column="currency_code" type="string" length="3" nullable="true"/>
+
+        <field name="shippingMethodCode" column="shipping_method_code" type="string" length="255" nullable="true"/>
+        <field name="shippingMethodName" column="shipping_method_name" type="string" length="255" nullable="true"/>
+
+        <field name="qualifiedAt" column="qualified_at" type="datetime" nullable="true"/>
+        <field name="sentAt" column="sent_at" type="datetime" nullable="true"/>
+        <field name="expiresAt" column="expires_at" type="datetime" nullable="true"/>
+
+        <field name="score" column="score" type="smallint" nullable="true"/>
+        <field name="scoreSetAt" column="score_set_at" type="datetime" nullable="true"/>
+        <field name="comment" column="comment" type="text" nullable="true"/>
+        <field name="completedAt" column="completed_at" type="datetime" nullable="true"/>
+        <field name="skipReason" column="skip_reason" type="string" length="32" nullable="true" enum-type="Cyfrowe\SyliusNpsPlugin\Entity\SkipReason"/>
+        <field name="botSuspected" column="bot_suspected" type="boolean"/>
+
+        <field name="handlingStatus" column="handling_status" type="string" length="20" enum-type="Cyfrowe\SyliusNpsPlugin\Entity\HandlingStatus"/>
+        <field name="handledBy" column="handled_by" type="string" length="255" nullable="true"/>
+        <field name="internalNote" column="internal_note" type="text" nullable="true"/>
+
+        <field name="criticalNotifiedAt" column="critical_notified_at" type="datetime" nullable="true"/>
+        <field name="criticalCommentNotifiedAt" column="critical_comment_notified_at" type="datetime" nullable="true"/>
+        <field name="criticalCorrectionNotifiedAt" column="critical_correction_notified_at" type="datetime" nullable="true"/>
+        <field name="criticalAttempts" column="critical_attempts" type="smallint">
+            <options>
+                <option name="default">0</option>
+            </options>
+        </field>
+
+        <many-to-one field="order" target-entity="Sylius\Component\Core\Model\OrderInterface">
+            <join-column name="order_id" referenced-column-name="id" nullable="true" on-delete="SET NULL"/>
+        </many-to-one>
+
+        <many-to-one field="customer" target-entity="Sylius\Component\Core\Model\CustomerInterface">
+            <join-column name="customer_id" referenced-column-name="id" nullable="true" on-delete="SET NULL"/>
+        </many-to-one>
+    </mapped-superclass>
+</doctrine-mapping>

@@ -1,0 +1,17 @@
+/vendor/
+/node_modules/
+/var/
+/.env
+/.env.local
+/composer.lock
+/.idea/
+/tests/Application/var/
+/tests/Application/public/media/
+/tests/Application/public/bundles/
+/tests/Application/node_modules/
+/tests/Application/yarn.lock
+/tests/Application/.env.local
+/behat.yml
+/phpunit.xml
+/phpstan-report.json
+/.phpunit.result.cache

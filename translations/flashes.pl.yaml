@@ -1,0 +1,9 @@
+cyfrowe_nps:
+    flash:
+        test_email:
+            sent: 'Testowy mail został wysłany.'
+            bad_address: 'Podaj poprawny adres, na który wysłać test.'
+            failed: 'Nie udało się złożyć testowego maila.'
+        handling:
+            saved: 'Status i notatka zostały zapisane.'
+            failed: 'Nie udało się zapisać statusu i notatki.'

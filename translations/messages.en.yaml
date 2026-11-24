@@ -1,0 +1,161 @@
+cyfrowe_nps:
+    ui:
+        nps: NPS
+        channel_configurations: NPS settings
+        new_channel_configuration: New channel configuration
+        edit_channel_configuration: Edit channel configuration
+        surveys: 'NPS responses'
+        responses: 'Responses'
+        responses_subheader: 'Scores and comments from customers'
+        scored_at: 'Scored at'
+        score: 'Score'
+        category: 'Category'
+        customer_email: 'Customer'
+        order_number: 'Order'
+        shipping_method: 'Shipping method'
+        handling_status: 'Handling status'
+        survey_status: 'Survey status'
+        sent_date: 'Sent on'
+        skip_reason: 'Reason for skipping'
+        comment: 'Comment'
+        search: 'E-mail or order number'
+        scored: 'Scored'
+        summary:
+            index: 'NPS'
+            no_answers: 'No answers yet'
+            answers: 'Answers'
+            average_score: 'Average score'
+            with_comment: 'With a comment'
+            sent: 'Sent'
+            clicked: 'Scored'
+            completed: 'Completed'
+            response_rate: 'Response rate'
+            completion_rate: 'Completion rate'
+            rates_withheld: 'Rates are not shown because the filters in use leave out some of the surveys sent (a score or status filter, for instance). Narrow the list by the date sent, the channel or the shipping method instead.'
+            rates_still_open: 'Surveys whose link is still valid may yet be answered.'
+            distribution: 'Score distribution'
+        categories:
+            promoter: 'Promoter'
+            passive: 'Passive'
+            detractor: 'Detractor'
+        survey_statuses:
+            pending: 'Pending'
+            queued: 'Queued'
+            sent: 'Sent'
+            scored: 'Scored'
+            completed: 'Completed'
+            skipped: 'Skipped'
+        skip_reasons:
+            no_recipient: 'No e-mail address'
+            cooldown: 'A survey went to this customer recently'
+            channel_disabled: 'Survey disabled in the channel'
+            channel_missing: 'Channel no longer exists'
+            order_cancelled: 'Order cancelled'
+            order_missing: 'Order no longer exists'
+        handling_statuses:
+            new: 'New'
+            in_progress: 'In progress'
+            done: 'Handled'
+        response: 'Response'
+        back_to_list: 'Back to the list'
+        customer_name: 'Name'
+        order_total: 'Order value'
+        currency: 'Currency'
+        export_csv: 'Export CSV'
+        sent_at: 'Survey sent'
+        completed_at: 'Completed'
+        question: 'Question asked'
+        answer: 'Answer'
+        no_comment: 'No comment was left.'
+        handling: 'Handling'
+        handled_by: 'Handled by'
+        internal_note: 'Internal note'
+        save: 'Save'
+        settings: Settings
+        settings_subheader: Survey settings per sales channel
+        channel: Channel
+        enabled: Enabled
+        delay_days: Send after (days)
+        cooldown_days: Cooldown (days)
+        notifications: Notifications
+    email:
+        survey:
+            subject: 'Share your feedback with us'
+            greeting: 'Hi %name%,'
+            greeting_without_name: 'Hi,'
+            main_question: 'How likely are you to recommend us to a friend?'
+            scale_low: 'not at all likely'
+            scale_high: 'extremely likely'
+            about_order: 'This is about order %number%.'
+        critical:
+            subject: 'Critical NPS score %score% - order %number%'
+            subject_correction: 'NPS score corrected to %score% - order %number%'
+            subject_comment: 'Comment added to NPS score %score% - order %number%'
+            lead: 'A customer rated their order %number% at %score%.'
+            lead_correction: 'The customer has changed the score to %score%, so order %number% no longer needs chasing.'
+            lead_comment: 'The customer has added a comment to the score of %score% for order %number%.'
+            final: 'Final score - the customer submitted the form.'
+            provisional: 'Provisional score - the customer left no comment and may still change it until %date%.'
+            comment: 'Comment'
+            no_comment: 'The customer left no comment.'
+            order: 'Order'
+            order_value: 'Order value'
+            shipping_method: 'Shipping method'
+            open_card: 'Open the response in the panel'
+            bot_suspected: 'This record was flagged as possibly automated. The flag is diagnostic only and never decides whether an alert is sent.'
+    shop:
+        survey:
+            breadcrumb: Survey
+            title: Share your opinion with us
+            saved: Thank you! Your score has been saved.
+            main_question: How likely are you to recommend us to a friend?
+            question_low: What went wrong?
+            question_high: What did you like most?
+            score: Your score
+            comment: Anything you would like to add?
+            comment_help: Please do not include any personal details.
+            submit: Send feedback
+            unknown:
+                header: We do not recognise this link
+                message: Check that you opened the full link from the email.
+            expired:
+                header: The survey has expired
+                message: The survey was open for a limited time and is now closed. Thank you for your interest.
+            completed:
+                header: Your feedback has been saved
+                thank_you: Thank you for your time
+                your_score: 'Your score: %score%'
+    form:
+        configuration:
+            channel: Channel
+            channel_help: One configuration per sales channel.
+            enabled: Survey enabled
+            delay_days: Send after (days)
+            delay_days_help: Counted from the moment the order qualified.
+            cooldown_days: Cooldown (days)
+            cooldown_days_help: The same customer will not be surveyed more often than this.
+            send_hour_from: Send from (hour)
+            send_hour_from_help: Store time zone, 0-23.
+            send_hour_to: Send until (hour)
+            send_hour_to_help: The last email goes out before this hour, 1-24.
+            link_validity_days: Link validity (days)
+            link_validity_days_help: After this, the link shows an expiry notice instead of the survey.
+            notify_enabled: Alert on critical scores
+            notify_email: Alert address
+            notify_threshold: Critical score threshold
+            notify_threshold_help: Scores at or below this value trigger an alert.
+            notify_window_minutes: Grace window (minutes)
+            notify_window_minutes_help: How long to wait for the customer to submit the form before alerting.
+            test_email: 'Send a test to'
+            test_email_help: 'Sends the survey email with the wording currently on screen, saved or not. Its links save no score - they open the page for an unrecognised link.'
+            send_test_email: 'Send test email'
+            contents: Contents
+            email_subject: Email subject
+            main_question: Main question
+            main_question_help: The question asked in the email, above the 0-10 scale.
+            question_low: Question for scores 0-8
+            question_low_help: Shown in the form when the customer rated 8 or lower.
+            question_high: Question for scores 9-10
+            question_high_help: Shown in the form when the customer rated 9 or 10.
+            thank_you_text: Thank-you text
+            footer_note: Footer note

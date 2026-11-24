@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping
+                                        https://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+    <class name="Cyfrowe\SyliusNpsPlugin\Entity\Configuration">
+        <constraint name="Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity">
+            <option name="fields">channelCode</option>
+            <option name="message">cyfrowe_nps.configuration.channel.unique</option>
+            <option name="errorPath">channelCode</option>
+            <option name="groups">
+                <value>sylius</value>
+            </option>
+        </constraint>
+
+        <property name="channelCode">
+            <constraint name="NotBlank">
+                <option name="message">cyfrowe_nps.configuration.channel.not_blank</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="delayDays">
+            <constraint name="Range">
+                <option name="min">0</option>
+                <option name="max">365</option>
+                <option name="notInRangeMessage">cyfrowe_nps.configuration.delay_days.range</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="cooldownDays">
+            <constraint name="Range">
+                <option name="min">0</option>
+                <option name="max">3650</option>
+                <option name="notInRangeMessage">cyfrowe_nps.configuration.cooldown_days.range</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="linkValidityDays">
+            <constraint name="Range">
+                <option name="min">1</option>
+                <option name="max">365</option>
+                <option name="notInRangeMessage">cyfrowe_nps.configuration.link_validity_days.range</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="sendHourFrom">
+            <constraint name="Range">
+                <option name="min">0</option>
+                <option name="max">23</option>
+                <option name="notInRangeMessage">cyfrowe_nps.configuration.send_hour_from.range</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="sendHourTo">
+            <constraint name="Range">
+                <option name="min">1</option>
+                <option name="max">24</option>
+                <option name="notInRangeMessage">cyfrowe_nps.configuration.send_hour_to.range</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+            <constraint name="Expression">
+                <option name="expression">value > this.getSendHourFrom()</option>
+                <option name="message">cyfrowe_nps.configuration.send_hour_to.after_from</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="notifyThreshold">
+            <constraint name="Range">
+                <option name="min">0</option>
+                <option name="max">10</option>
+                <option name="notInRangeMessage">cyfrowe_nps.configuration.notify_threshold.range</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="notifyWindowMinutes">
+            <constraint name="Range">
+                <option name="min">0</option>
+                <option name="max">1440</option>
+                <option name="notInRangeMessage">cyfrowe_nps.configuration.notify_window_minutes.range</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+
+        <property name="notifyEmail">
+            <constraint name="Email">
+                <option name="message">cyfrowe_nps.configuration.notify_email.invalid</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+            <constraint name="Expression">
+                <option name="expression">!this.isNotifyEnabled() or value !== null</option>
+                <option name="message">cyfrowe_nps.configuration.notify_email.required_when_enabled</option>
+                <option name="groups">
+                    <value>sylius</value>
+                </option>
+            </constraint>
+        </property>
+    </class>
+</constraint-mapping>

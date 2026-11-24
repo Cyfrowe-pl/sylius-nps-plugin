@@ -1,0 +1,119 @@
+{% extends layout %}
+
+{#
+    One tile of the scale. The size sits on the cell, with width and height attributes as well as
+    styles: Outlook on Windows renders through Word, which ignores min-width and min-height and does
+    not treat display on an inline element the way a browser does. The link fills the whole tile, so
+    the tap target is the tile and not just the digit.
+#}
+{% macro tile(score, parameters, channel) %}
+    <td align="center" valign="top" style="padding: 0 1px 4px;">
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td width="44" height="44" align="center" valign="middle" style="width: 44px; height: 44px; border: 1px solid #1abb9c;">
+                    <a href="{{ sylius_channel_url(path('cyfrowe_nps_shop_survey_score', parameters), channel) }}"
+                       style="display: block; width: 44px; height: 44px; line-height: 44px; text-align: center; color: #1abb9c; font-size: 16px; font-weight: bold; text-decoration: none;">{{ score }}</a>
+                </td>
+            </tr>
+        </table>
+    </td>
+{% endmacro %}
+
+{% block subject %}
+    {{ contents.emailSubject|default(null) ?: 'cyfrowe_nps.email.survey.subject'|trans([], null, localeCode) }}
+{% endblock %}
+
+{% block content %}
+    {% import _self as nps %}
+
+    <p>
+        {% if customer_first_name %}
+            {{ 'cyfrowe_nps.email.survey.greeting'|trans({'%name%': customer_first_name}, null, localeCode) }}
+        {% else %}
+            {{ 'cyfrowe_nps.email.survey.greeting_without_name'|trans([], null, localeCode) }}
+        {% endif %}
+    </p>
+
+    <p>{{ contents.mainQuestion|default(null) ?: 'cyfrowe_nps.email.survey.main_question'|trans([], null, localeCode) }}</p>
+
+    {#
+        Two blocks, 0-5 and 6-10: side by side where the email is wide enough, one under the other
+        on a phone. Tables and no CSS backgrounds or images, so the numbers stay clickable in
+        Outlook; the [if mso] tables hold the blocks side by side there, since Word ignores
+        inline-block. Each tile takes 48px (44px, its border and 1px of spacing a side), so both
+        blocks fit the 540px the stock Sylius email layout leaves for the content.
+    #}
+    {% set legend_style = 'display: inline-block; padding: 0 1px; vertical-align: top; white-space: nowrap; color: #777; font-size: 12px; line-height: 16px;' %}
+
+    {#
+        Once the blocks stack, both ends of the legend go to the left, one under the other. A client
+        that drops this style keeps the legend under the tiles anyway, with "10" right-aligned
+        under the 10 tile - the scale is left-aligned, so the two still line up.
+    #}
+    <style>
+        @media screen and (max-width: 599px) {
+            .nps-legend {
+                display: block !important;
+                width: auto !important;
+                text-align: left !important;
+            }
+        }
+    </style>
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 24px 0;">
+        <tr>
+            <td align="left" style="font-size: 0; line-height: 0;">
+                <!--[if mso]>
+                <table role="presentation" align="left" cellpadding="0" cellspacing="0" border="0"><tr><td width="288" valign="top">
+                <![endif]-->
+                <div style="display: inline-block; width: 288px; vertical-align: top;">
+                    <table role="presentation" width="288" cellpadding="0" cellspacing="0" border="0" style="width: 288px;">
+                        <tr>
+                            {% for score, parameters in score_routes|slice(0, 6, true) %}
+                                {{ nps.tile(score, parameters, channel) }}
+                            {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+                <!--[if mso]>
+                </td><td width="240" valign="top">
+                <![endif]-->
+                <div style="display: inline-block; width: 240px; vertical-align: top;">
+                    <table role="presentation" width="240" cellpadding="0" cellspacing="0" border="0" style="width: 240px;">
+                        <tr>
+                            {% for score, parameters in score_routes|slice(6, null, true) %}
+                                {{ nps.tile(score, parameters, channel) }}
+                            {% endfor %}
+                        </tr>
+                    </table>
+                </div>
+                <!--[if mso]>
+                </td></tr></table>
+                <![endif]-->
+            </td>
+        </tr>
+        <tr>
+            <td align="left" style="padding-top: 4px; font-size: 0; line-height: 0;">
+                <!--[if mso]>
+                <table role="presentation" align="left" cellpadding="0" cellspacing="0" border="0"><tr><td width="288" valign="top">
+                <![endif]-->
+                <div class="nps-legend" style="{{ legend_style }} width: 286px; text-align: left;">0 &ndash; {{ 'cyfrowe_nps.email.survey.scale_low'|trans([], null, localeCode) }}</div>
+                <!--[if mso]>
+                </td><td width="240" valign="top" align="right">
+                <![endif]-->
+                <div class="nps-legend" style="{{ legend_style }} width: 238px; text-align: right;">10 &ndash; {{ 'cyfrowe_nps.email.survey.scale_high'|trans([], null, localeCode) }}</div>
+                <!--[if mso]>
+                </td></tr></table>
+                <![endif]-->
+            </td>
+        </tr>
+    </table>
+
+    <p style="font-size: 13px; color: #777;">
+        {{ 'cyfrowe_nps.email.survey.about_order'|trans({'%number%': survey.orderNumber}, null, localeCode) }}
+    </p>
+
+    {% if contents.footerNote|default(null) %}
+        <p style="font-size: 13px; color: #777;">{{ contents.footerNote }}</p>
+    {% endif %}
+{% endblock %}

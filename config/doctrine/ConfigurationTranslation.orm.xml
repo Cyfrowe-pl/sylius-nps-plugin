@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                                      http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <!--
+        `translatable`, `locale` and the unique index over both are added by Sylius'
+        ORMTranslatableListener. Mapping them here would only duplicate it.
+    -->
+    <mapped-superclass name="Cyfrowe\SyliusNpsPlugin\Entity\ConfigurationTranslation" table="cyfrowe_nps_configuration_translation">
+        <id name="id" column="id" type="integer">
+            <generator strategy="AUTO"/>
+        </id>
+
+        <field name="emailSubject" column="email_subject" type="string" length="255" nullable="true"/>
+        <field name="mainQuestion" column="main_question" type="text" nullable="true"/>
+        <field name="questionLow" column="question_low" type="text" nullable="true"/>
+        <field name="questionHigh" column="question_high" type="text" nullable="true"/>
+        <field name="thankYouText" column="thank_you_text" type="text" nullable="true"/>
+        <field name="footerNote" column="footer_note" type="text" nullable="true"/>
+    </mapped-superclass>
+</doctrine-mapping>

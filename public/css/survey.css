@@ -1,0 +1,77 @@
+/*
+ * The 0-10 scale on the default survey page. Only the layout is fixed here; the colour and the
+ * corner radius come from the shop's theme - Bootstrap's variables when there are any, Semantic UI's
+ * primary blue and radius otherwise. A shop sets --nps-scale-color to use a colour of its own.
+ */
+.nps-survey {
+    --nps-scale-color-resolved: var(--nps-scale-color, var(--bs-primary, #2185d0));
+}
+
+/* The question reads as a question, not as a section title - as in the email. */
+.nps-survey__question.ui.header {
+    font-weight: normal;
+}
+
+/* A follow-up to the score rather than a field caption: a little larger than Semantic's label, not bold. */
+.ui.form .field > label.nps-survey__follow-up {
+    font-size: 1.07142857em;
+    font-weight: normal;
+}
+
+/* 0-5 and 6-10 in two rows on a phone, one row once the column fits all eleven - like the email. */
+.nps-survey__scores {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    max-width: calc(6 * 44px + 5 * 4px);
+}
+
+@media (min-width: 768px) {
+    .nps-survey__scores {
+        max-width: none;
+    }
+}
+
+/* Hidden from the eye, not from the keyboard or a screen reader: the label is what gets clicked. */
+.nps-survey__score-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.nps-survey__score {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--bs-border-radius, .28571429rem);
+    box-shadow: inset 0 0 0 1px var(--nps-scale-color-resolved);
+    color: var(--nps-scale-color-resolved);
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+}
+
+/* A shadow, not a border: a thicker border would shift the number on hover. */
+.nps-survey__score:hover {
+    box-shadow: inset 0 0 0 2px var(--nps-scale-color-resolved);
+}
+
+.nps-survey__score-input:checked + .nps-survey__score {
+    background-color: var(--nps-scale-color-resolved);
+    color: #fff;
+}
+
+.nps-survey__score-input:focus-visible + .nps-survey__score {
+    outline: 2px solid var(--nps-scale-color-resolved);
+    outline-offset: 2px;
+}
